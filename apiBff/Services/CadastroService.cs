@@ -15,7 +15,7 @@ namespace apiBff.Services
        }
         public Task<MotoristaDto> BuscarCadastroMotorista()
         {
-            return _cadastroService.BuscarCadastroMotorista();
+            return _cadastroService.BuscarCadastroMotorista();            
         }
     }
 }

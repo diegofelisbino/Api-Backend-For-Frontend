@@ -1,5 +1,7 @@
 using apiBff.Interfaces;
+using apiBff.Models;
 using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace apiBff.Controllers;
 
@@ -16,9 +18,15 @@ public class ViewAgendamentoController : ControllerBase
 
     [HttpGet]
     [Route("BuscarDadosFrontAgendamento")]
-    public async Task<Models.FrontAgendamentoPendente> BuscarDadosViewAgendamento()
+    public async Task<ActionResult<FrontAgendamentoPendentemModel>> BuscarDadosViewAgendamento()
     {
-        return await _service.BuscarDadosViewAgendamento();
+        var frontAgendamento = await _service.BuscarDadosViewAgendamento();        
+        
+        if (frontAgendamento == null) return BadRequest("Falha ao buscar dados");
+
+        return Ok(frontAgendamento);
+
+        
     }
 }
 

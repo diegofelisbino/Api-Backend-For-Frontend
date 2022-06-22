@@ -14,6 +14,5 @@ namespace apiBff.Dtos
         public string Transportadora { get; set; }
         public string Motorista { get; set; }
         
-        
     }
 }

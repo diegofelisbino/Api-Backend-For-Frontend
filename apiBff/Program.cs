@@ -1,5 +1,6 @@
 using apiBff.Interfaces;
 using apiBff.Services;
+using AutoMapper;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+//Refit
+//exemplo para utilizar o Refit com [FromService]
 /*builder.Services
     .AddRefitClient<ICadastroService>()
     .ConfigureHttpClient(c =>
@@ -29,6 +32,9 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<ICadastroService, CadastroService>();
 builder.Services.AddScoped<IOperacionalService, OperacionalService>();
 builder.Services.AddScoped<IFrontAgendamentoService, FrontAgendamentoService>();
+
+//AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 

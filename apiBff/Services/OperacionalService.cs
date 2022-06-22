@@ -14,7 +14,7 @@ namespace apiBff.Services
         
        public Task<List<AgendamentoDto>> BuscarAgendamentos()
         {
-            return _service.BuscarAgendamentos();
+            return _service.BuscarAgendamentos();            
         }
 
         public Task<List<TerminalDto>> BuscarSituacaoOperacional()

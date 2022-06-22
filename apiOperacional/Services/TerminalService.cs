@@ -7,9 +7,15 @@ namespace apiOperacional.Services
     {
         public static List<Terminal> ListaDeTerminaisFake()
         {
+            var terminais = new List<String>();
+            terminais.Add("Terminal de Contêiner");
+            terminais.Add("Terminal de Granel");
+            terminais.Add("Terminal de Veículo");
+
+
             var terminalFaker = new Faker<Terminal>("pt_BR")
             .RuleFor(t => t.Id, f => f.IndexFaker)
-            .RuleFor(t => t.NomeTerminal, f => f.Person.Company.Name)
+            .RuleFor(t => t.NomeTerminal, f => f.Random.ListItem<String>(terminais))
             .RuleFor(t => t.Endereco, f => f.Address.StreetName())
             .RuleFor(t => t.Cidade, f => f.Address.City())
             .RuleFor(t => t.Estado, f => f.Address.State())

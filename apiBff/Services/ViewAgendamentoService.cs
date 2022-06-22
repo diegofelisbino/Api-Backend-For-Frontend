@@ -1,5 +1,7 @@
+using apiBff.Dtos;
 using apiBff.Interfaces;
 using apiBff.Models;
+using AutoMapper;
 
 namespace apiBff.Services
 {
@@ -7,52 +9,26 @@ namespace apiBff.Services
     {
         private readonly ICadastroService _cadastroService;
         private readonly IOperacionalService _operacionalService;
+        private readonly IMapper _mapper;
 
-        public FrontAgendamentoService(ICadastroService cadastroService, IOperacionalService operacionalService)
+        public FrontAgendamentoService(ICadastroService cadastroService, IOperacionalService operacionalService, IMapper mapper)
         {
             _cadastroService = cadastroService;
             _operacionalService = operacionalService;
+            _mapper = mapper;
         }
-        public async Task<FrontAgendamentoPendente> BuscarDadosViewAgendamento()
+        public async Task<FrontAgendamentoPendentemModel> BuscarDadosViewAgendamento()
         {
-            var frontAgendamento = new Models.FrontAgendamentoPendente();
-            frontAgendamento.Agendamentos = new List<AgendamentoPendente>();
-            frontAgendamento.SituacaoOperacionalTerminais = new List<SituacaoOperacional>();
-
+            var frontAgendamento = new Models.FrontAgendamentoPendentemModel();
+            
             var cadastroMotorista = await _cadastroService.BuscarCadastroMotorista();
-            frontAgendamento.CadastroFotoMotorista = cadastroMotorista.Foto;
-            frontAgendamento.CadastroNomeMotorista = cadastroMotorista.Nome;
+            frontAgendamento =  _mapper.Map<FrontAgendamentoPendentemModel>(cadastroMotorista) ;
 
             var terminais = await _operacionalService.BuscarSituacaoOperacional();            
-            if (terminais.Count > 0)
-            {
-                foreach (var terminal in terminais)
-                {          
-                    Models.SituacaoOperacional situacao = new SituacaoOperacional();
-                    situacao.SituacaoNomeTerminal = terminal.NomeTerminal;
-                    situacao.SituacaoStatusOperacional = terminal.StatusOperacional;
+            frontAgendamento.SituacaoOperacionalTerminais = _mapper.Map<List<SituacaoOperacionalModel>>(terminais);          
 
-                    frontAgendamento.SituacaoOperacionalTerminais.Add(situacao);
-                }
-
-            }
-
-            var agendamentos = await _operacionalService.BuscarAgendamentos();
-
-            if (agendamentos.Count > 0)
-            {
-                foreach (var agendamento in agendamentos)
-                {
-                    Models.AgendamentoPendente agendamentoPendente = new AgendamentoPendente();
-
-                    agendamentoPendente.AgendamentoDataPlanejada = agendamento.DataEntrada;
-                    agendamentoPendente.AgendamentoMotivacao = agendamento.Motivacao;
-                    agendamentoPendente.AgendamentoPlacaCavalo = agendamento.PlacaCavalo;
-                    agendamentoPendente.AgendamentoPlacaReboque = agendamento.PlacaReboque;
-
-                    frontAgendamento.Agendamentos.Add(agendamentoPendente);
-                }
-            }
+            var agendamentos =  await _operacionalService.BuscarAgendamentos();
+            frontAgendamento.Agendamentos = _mapper.Map<List<AgendamentoPendenteModel>>(agendamentos);           
 
             return frontAgendamento;
         }
