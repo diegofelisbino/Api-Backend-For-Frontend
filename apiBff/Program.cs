@@ -1,8 +1,4 @@
-using apiBff.Interfaces;
-using apiBff.Notificacoes;
-using apiBff.Services;
-using AutoMapper;
-using Refit;
+using apiBff.Configuracoes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,29 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "Exemplo API Bff - BackEnd for FrontEnd",
-        Version = "v1"
 
-    });
-});
+//Swagger
+SwaggerConfig.AddSwaggerConfig(builder.Services);
 
-//Refit
-//exemplo para utilizar o Refit com [FromService]
-/*builder.Services
-    .AddRefitClient<ICadastroService>()
-    .ConfigureHttpClient(c =>
-    {
-        c.BaseAddress = new Uri("http://localhost:5207/");
-    });*/
-
-builder.Services.AddScoped<ICadastroService, CadastroService>();
-builder.Services.AddScoped<IOperacionalService, OperacionalService>();
-builder.Services.AddScoped<IFrontAgendamentoService, FrontAgendamentoService>();
-builder.Services.AddScoped<INotificador, Notificador>();
+//Configuracoes da Injecao de Dependencia
+DependecyInjectionConfig.ResolveDependencies(builder.Services);
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
