@@ -1,4 +1,5 @@
 using apiBff.Interfaces;
+using apiBff.Notificacoes;
 using apiBff.Services;
 using AutoMapper;
 using Refit;
@@ -32,6 +33,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<ICadastroService, CadastroService>();
 builder.Services.AddScoped<IOperacionalService, OperacionalService>();
 builder.Services.AddScoped<IFrontAgendamentoService, FrontAgendamentoService>();
+builder.Services.AddScoped<INotificador, Notificador>();
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

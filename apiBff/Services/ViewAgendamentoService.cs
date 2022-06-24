@@ -28,7 +28,7 @@ namespace apiBff.Services
             frontAgendamento.SituacaoOperacionalTerminais = _mapper.Map<List<SituacaoOperacionalModel>>(terminais);          
 
             var agendamentos =  await _operacionalService.BuscarAgendamentos();
-            frontAgendamento.Agendamentos = _mapper.Map<List<AgendamentoPendenteModel>>(agendamentos);           
+            frontAgendamento.Agendamentos = _mapper.Map<List<AgendamentoPendenteModel>>(agendamentos);
 
             return frontAgendamento;
         }
