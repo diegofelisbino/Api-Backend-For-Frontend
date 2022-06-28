@@ -6,18 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace apiBff.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("Bff")]
 public class ViewAgendamentoController : MainController
 {
-    private readonly IFrontAgendamentoService _service;    
+    private readonly IFrontAgendamentoService _service;
 
-    public ViewAgendamentoController(INotificador notificador,IFrontAgendamentoService service) : base(notificador)
+    public ViewAgendamentoController(INotificador notificador, IFrontAgendamentoService service) : base(notificador)
     {
         _service = service;
     }
 
-    [HttpGet]
-    [Route("BuscarDadosFrontAgendamento")]
+    [HttpGet("BuscarDadosFrontAgendamento")]    
     public async Task<ActionResult<FrontAgendamentoPendentemModel>> BuscarDadosViewAgendamento()
     {
         var frontAgendamento = await _service.BuscarDadosViewAgendamento();        
