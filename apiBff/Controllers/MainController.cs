@@ -22,7 +22,7 @@ namespace apiBff.Controllers
         {
             return !_notificador.TemNotificacao();
         }
-        protected ActionResult CustonResponse(object result = null)
+        protected ActionResult CustomResponse(object result = null)
         {
             if (OperacaoValida())
             {
@@ -40,10 +40,10 @@ namespace apiBff.Controllers
             });
         }
 
-        protected ActionResult CustonResponse(ModelStateDictionary modelState)
+        protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
             if (!modelState.IsValid) NotificarErroModelInvalida(modelState);
-            return CustonResponse();
+            return CustomResponse();
         }
 
         protected void NotificarErroModelInvalida(ModelStateDictionary modelState)

@@ -24,12 +24,12 @@ public class ViewAgendamentoController : MainController
         if (frontAgendamento == null)
         {
             NotificarErro("Falha ao buscar dados");
-            return CustonResponse();
+            return CustomResponse();
         }
 
-        if(!ModelState.IsValid) return CustonResponse(ModelState);
+        if(!ModelState.IsValid) return CustomResponse(ModelState);
 
-        return CustonResponse(frontAgendamento);
+        return CustomResponse(frontAgendamento);
     }
 }
 
